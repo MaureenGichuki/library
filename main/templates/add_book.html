@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add Book
+{% endblock %}
+
+{% block content %}
+    <h2>Add Book</h2>
+    <form action="{{ url_for('add_book') }}" method="POST">
+        <input type="text" name="title" placeholder="Title">
+        <input type="text" name="author" placeholder="Author">
+        <input type="number" name="fee" placeholder="Fee">
+        <input type="number" name="stock" placeholder="Stock">
+        <input type="submit" value="Add Book">
+    </form>
+{% endblock %}

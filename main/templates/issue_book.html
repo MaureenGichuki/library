@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Issue Book
+{% endblock %}
+
+{% block content %}
+    <h2>Issue Book</h2>
+    <form action="{{ url_for('issue_book') }}" method="POST">
+        <select name="book_id" class="form-control">
+            {% for book in books %}
+                <option value="{{ book.id }}">{{ book.title }} (Fee: {{ book.fee }})</option>
+            {% endfor %}
+        </select>
+        <select name="member_id" class="form-control">
+            {% for member in members %}
+                <option value="{{ member.id }}">{{ member.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="date" name="return_date" required>
+        <input type="number" name="days" placeholder="Number of Days" required>
+        <input type="submit" value="Issue">
+    </form>
+
+{% endblock %}

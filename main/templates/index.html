@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <h1>Library Management System</h1>
+
+    <h2>Issued Books</h2>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Member</th>
+                <th scope="col">Book</th>
+                <th scope="col">Date Issued</th>
+                <th scope="col">Date Returned</th>
+                <th scope="col">Rent Fee</th>
+                <th scope="col">Debt</th>
+                <th scope="col">Days</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ transaction.member.name }}</td>
+                <td>{{ transaction.book.title }}</td>
+                <td>{{ transaction.date_issued.strftime("%Y-%m-%d") }}</td>
+                <td>
+                    {% if transaction.date_returned %}
+                        {{ transaction.date_returned.strftime("%Y-%m-%d") }}
+                    {% else %}
+                        <form action="{{ url_for('return_book') }}" method="POST">
+                            <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
+                            <input type="submit" value="Return Book">
+                        </form>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if transaction.date_returned %}
+                        {{ calculate_rent_fee(transaction.date_issued, transaction.date_returned, transaction.book.fee) }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not transaction.date_returned %}
+                        {{ member_debt(transaction.member, transaction.date_issued) }}
+                    {% else %}
+                        {{ transaction.member.outstanding_debt }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if transaction.days %}
+                        {{ transaction.days }}
+                    {% elif transaction.date_returned %}
+                        {{ (transaction.date_returned - transaction.date_issued).days }}
+                    {% else %}
+                        {{ (date.today() - transaction.date_issued).days }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

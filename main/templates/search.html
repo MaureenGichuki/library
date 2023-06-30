@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Stock</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.stock }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+
+{% endblock %}
