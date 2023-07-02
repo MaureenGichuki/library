@@ -17,6 +17,11 @@ The application includes the following functionalities:
 - Searching for books by name and author
 - Charging rent fees on book returns
 - Enforcing a member's outstanding debt limit (not exceeding KES.500)
+  
+## Website
+![Login](screenshots/Screenshot(7).png)
+
+
 
 
 
