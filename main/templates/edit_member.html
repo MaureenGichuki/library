@@ -5,14 +5,43 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Edit Member</h2>
-    <form action="{{ url_for('edit_member', member_id=member.id) }}" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" name="name" value="{{ member.name }}"><br><br>
-        <label for="email">Email:</label>
-        <input type="text" name="email" value="{{ member.email }}"><br><br>
-        <label for="phone">Phone:</label>
-        <input type="text" name="phone" value="{{ member.phone }}"><br><br>
-        <input type="submit" value="Save Changes">
-    </form>
+<form id="member_form" method="POST" action="{{ url_for('edit_member', member_id=member.id) }}" style="margin: 15px">
+    <div class="topheading">
+        <h3 style="float:left">Edit Member</h3>
+        <div class="buttonactions" style="float: right;">
+            <button class="btn btn-success" type="submit" name="submit">Save Changes</button>
+            <button class="btn btn-danger"><a href="{{ url_for('members') }}">Cancel</a></button>
+
+        </div>
+    </div>
+    <br><br>
+    <hr style="border-top: 2px solid black">
+    <br>
+    <div class="form-group row" enctype="multipart/form-data">
+        <label for="profile_photo" class="col-sm-2 col-form-label">Profile Photo</label>
+        <div class="col-sm-10">
+            <input type="file" class="form-control" id="profile_photo" placeholder="profile_photo" name="profile_photo" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" value="{{ member.name }}" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" name="email" value="{{ member.email }}" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" name="phone" value="{{ member.phone }}" required>
+        </div>
+    </div>
+</form>
 {% endblock %}

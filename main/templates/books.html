@@ -5,40 +5,63 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Books</h2>
-    <h2>Search Books</h2>
-    <form action="{{ url_for('search') }}" method="POST">
-        <input type="text" name="keyword" placeholder="Keyword">
-        <input type="submit" value="Search">
-    </form>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('add_book') }}">Add a Book</a>
-    </li>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Stock</th>
-            <th>Fee</th>
-            <th>Action</th>
-        </tr>
-        {% for book in books %}
-        <tr>
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
-            <td>{{ book.fee }}</td>
-            <td>{{ book.stock }}</td>
-            <td>
+<div class="topheading">
+    <h2 style="float:left">Books</h2>
+      <div class="buttonactions" style="float: right;">
+        <button class="btn btn-secondary"><a href="{{ url_for('add_book') }}">Add Book</a></button>
+        <button class="btn btn-secondary"><a href="{{ url_for('home') }}">Go Back</a></button>
+      </div>
+      <br>
+      <br>
+      <div style="float:right">
+        <form class="form-inline" action="{{ url_for('search') }}" method="POST">
+          <div class="input-group">
+            <input class="form-control" type="search" name="keyword" placeholder="Search Books" aria-label="Search">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="submit" style="margin-left:5px">Search</button>
+            </div>
+          </div>
+        </form>
+    </div>
+        <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Book Cover</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Fee</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>
+                    {% if book.cover_photo %}
+                        <img src="{{ url_for('static', filename='photos/' + book.cover_photo) }}" alt="Cover Photo" style="max-height: 150px; max-width: 300px;">
+                    {% else %}
+                        No Cover Photo
+                    {% endif %}
+                </td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.stock }}</td>
+                <td>{{ book.fee }}</td>
                 
-                </form>
-                <form action="{{ url_for('edit_book', book_id=book.id) }}" method="GET">
-                    <input type="submit" value="Edit">
-                </form>
-                <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST">
-                    <input type="submit" value="Delete">
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
+                <td>
+                    <div class="d-flex">
+                        <form action="{{ url_for('edit_book', book_id=book.id) }}" method="GET">
+                            <input type="submit" value="Edit" class="btn btn-success" style="margin-right: 5px;">
+                        </form>
+                        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                        
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}

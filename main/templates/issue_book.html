@@ -5,21 +5,27 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Issue Book</h2>
-    <form action="{{ url_for('issue_book') }}" method="POST">
-        <select name="book_id" class="form-control">
+    <h4>Issue Book</h4>
+    <form class="form-inline" action="{{ url_for('issue_book') }}" method="POST">
+        <label class="my-1 mr-2" for="bookSelect" style="font-weight: bold" >Book</label>
+        <select name="book_id" class="custom-select my-1 mr-sm-2" id="bookSelect" style="width: 350px; height: 30px">
             {% for book in books %}
                 <option value="{{ book.id }}">{{ book.title }} (Fee: {{ book.fee }})</option>
             {% endfor %}
         </select>
-        <select name="member_id" class="form-control">
+
+        <label class="my-1 mr-2" for="memberSelect" style="font-weight: bold">Member</label>
+        <select name="member_id" class="custom-select my-1 mr-sm-2" id="memberSelect" style="width: 350px; height: 30px">
             {% for member in members %}
                 <option value="{{ member.id }}">{{ member.name }}</option>
             {% endfor %}
         </select>
-        <input type="date" name="return_date" required>
-        <input type="number" name="days" placeholder="Number of Days" required>
-        <input type="submit" value="Issue">
+
+        <button type="submit" class="btn btn-secondary">Issue</button>
+        <button class="btn btn-danger"><a href="{{ url_for('home') }}">Cancel</a></button>
+
     </form>
+
+
 
 {% endblock %}

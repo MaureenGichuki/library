@@ -5,12 +5,50 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Add Book</h2>
-    <form action="{{ url_for('add_book') }}" method="POST">
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="author" placeholder="Author">
-        <input type="number" name="fee" placeholder="Fee">
-        <input type="number" name="stock" placeholder="Stock">
-        <input type="submit" value="Add Book">
-    </form>
+<form id="book_form" method="POST" action="{{ url_for('add_book') }}" style="margin: 15px" enctype="multipart/form-data">
+    <div class="topheading">
+        <h3 style="float:left">Add Book</h3>
+        <div class="buttonactions" style="float: right;">
+            <button class="btn btn-success" type="submit" name="submit">Save</button>
+            <button class="btn btn-danger"><a href="{{ url_for('books') }}">Cancel</a></button>
+        </div>
+    </div>
+    <br><br>
+    <hr style="border-top: 2px solid black">
+    <br>
+    <div class="form-group row" >
+        <label for="cover_photo" class="col-sm-2 col-form-label">Cover Photo</label>
+        <div class="col-sm-10">
+            <input type="file" class="form-control" id="cover_photo" placeholder="cover_photo" name="cover_photo" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="author" class="col-sm-2 col-form-label">Author</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="author" placeholder="Author" name="author" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="fee" class="col-sm-2 col-form-label">Fee</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="fee" placeholder="Fee" name="fee" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="stock" placeholder="Stock" name="stock" required>
+        </div>
+    </div>
+</form>
 {% endblock %}

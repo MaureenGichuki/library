@@ -5,11 +5,43 @@
 {% endblock %}
 
 {% block content %}
-<h2>Add Member</h2>
-<form action="{{ url_for('add_member') }}" method="POST">
-    <input type="text" name="name" placeholder="Name">
-    <input type="email" name="email" placeholder="Email">
-    <input type="text" name="phone" placeholder="Phone Number">
-    <input type="submit" value="Add Member">
+<form id="member_form" method="POST" action="{{ url_for('add_member') }}" style="margin: 15px" enctype="multipart/form-data">
+    <div class="topheading">
+        <h3 style="float:left">Add Member</h3>
+        <div class="buttonactions" style="float: right;">
+            <button class="btn btn-success" type="submit" name="submit">Save</button>
+            <button class="btn btn-danger"><a href="{{ url_for('members') }}">Cancel</a></button>
+        </div>
+    </div>
+    <br><br>
+    <hr style="border-top: 2px solid black">
+    <br>
+    <div class="form-group row" enctype="multipart/form-data">
+        <label for="profile_photo" class="col-sm-2 col-form-label">Profile Photo</label>
+        <div class="col-sm-10">
+            <input type="file" class="form-control" id="profile_photo" placeholder="profile_photo" name="profile_photo" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" placeholder="Name" name="name" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phone" required>
+        </div>
+    </div>
 </form>
 {% endblock %}

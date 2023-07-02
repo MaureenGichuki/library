@@ -5,26 +5,24 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Library Management System</h1>
-
     <h2>Issued Books</h2>
     <table class="table">
         <thead class="thead-light">
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Member</th>
                 <th scope="col">Book</th>
                 <th scope="col">Date Issued</th>
-                <th scope="col">Date Returned</th>
+                <th scope="col">Date Returned</th>  
                 <th scope="col">Rent Fee</th>
                 <th scope="col">Debt</th>
                 <th scope="col">Days</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for transaction in transactions %}
+            {% if not transaction.date_returned %}
             <tr>
-                <th scope="row">{{ loop.index }}</th>
                 <td>{{ transaction.member.name }}</td>
                 <td>{{ transaction.book.title }}</td>
                 <td>{{ transaction.date_issued.strftime("%Y-%m-%d") }}</td>
@@ -32,34 +30,62 @@
                     {% if transaction.date_returned %}
                         {{ transaction.date_returned.strftime("%Y-%m-%d") }}
                     {% else %}
-                        <form action="{{ url_for('return_book') }}" method="POST">
-                            <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
-                            <input type="submit" value="Return Book">
-                        </form>
+                        Not Returned
                     {% endif %}
                 </td>
                 <td>
-                    {% if transaction.date_returned %}
-                        {{ calculate_rent_fee(transaction.date_issued, transaction.date_returned, transaction.book.fee) }}
-                    {% endif %}
-                </td>
-                <td>
-                    {% if not transaction.date_returned %}
-                        {{ member_debt(transaction.member, transaction.date_issued) }}
+                    {% if transaction.book.fee %}
+                        {{ transaction.book.fee }}
                     {% else %}
-                        {{ transaction.member.outstanding_debt }}
+                        0
                     {% endif %}
+                </td>
+                <td>
+                    {{ member_debt(transaction.member, transaction.date_issued) }}
                 </td>
                 <td>
                     {% if transaction.days %}
                         {{ transaction.days }}
-                    {% elif transaction.date_returned %}
-                        {{ (transaction.date_returned - transaction.date_issued).days }}
                     {% else %}
                         {{ (date.today() - transaction.date_issued).days }}
                     {% endif %}
                 </td>
+                <td>
+                    {% if not transaction.date_returned %}
+                        <form action="{{ url_for('return_book') }}" method="POST">
+                            <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
+                            <button class="btn btn-primary" type="submit" value="Return Book">Return Book</button>
+                        </form>
+                    {% endif %}
+                </td>
             </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Past Transactions</h2>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Member</th>
+                <th scope="col">Book</th>
+                <th scope="col">Date Issued</th>
+                <th scope="col">Date Returned</th>
+                <th scope="col">Settled Debt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            {% if transaction.date_returned %}
+            <tr>
+                <td>{{ transaction.member.name }}</td>
+                <td>{{ transaction.book.title }}</td>
+                <td>{{ transaction.date_issued.strftime("%Y-%m-%d") }}</td>
+                <td>{{ transaction.date_returned.strftime("%Y-%m-%d") }}</td>
+                <td>{{ member_debt(transaction.member, transaction.date_issued) }}</td>
+            </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>
