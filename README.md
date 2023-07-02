@@ -19,7 +19,7 @@ The application includes the following functionalities:
 - Enforcing a member's outstanding debt limit (not exceeding KES.500)
   
 ## Website
-![Login](main/screenshots/Screenshot(7).png)
+![Login](Screenshot(7).png)
 
 
 
