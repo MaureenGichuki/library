@@ -54,7 +54,7 @@
                     {% if not transaction.date_returned %}
                         <form action="{{ url_for('return_book') }}" method="POST">
                             <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
-                            <button class="btn btn-primary" type="submit" value="Return Book">Return Book</button>
+                            <button class="btn btn-secondary" type="submit" value="Return Book">Return Book</button>
                         </form>
                     {% endif %}
                 </td>
